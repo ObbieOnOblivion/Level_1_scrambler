@@ -1,5 +1,8 @@
 import random
+list_message = []
+print('------------------------------############-----------------------------')
 with open("day_codes", 'r') as codesheet:
+
     list1 = []
     r = codesheet.readlines()
     for i in r:
@@ -10,6 +13,7 @@ with open("day_codes", 'r') as codesheet:
     Rands = Rands.strip('(')
     Rands = Rands.strip(')')
     word = Rands.split(", ")
+    # print(word)
     code = None
     list2 = list()
     for i in word:
@@ -43,6 +47,12 @@ with open('message_file', 'r') as message:
 
         return dict1[letter]
 
+
+    print(get_number("l"))
+
+    print(get_letter(2))
+
+    
     for qwert in read:
         if qwert:
             number101 = get_number('j')
@@ -57,7 +67,7 @@ with open('message_file', 'r') as message:
 
 
             james = letter_position()
-
+            
 
             def rotor_position_1():
                 key = letter_position()
@@ -121,7 +131,8 @@ with open('message_file', 'r') as message:
 
             rotor2 = rotor_position_2
 
-            def rotor_position_3(): 
+
+            def rotor_position_3():
                 key3 = None
                 key = rotor2()[1]
                 cross_wiring = {'1': 17, '2': 24, '3': 6, '4': 9, '5': 11, '7': 8, '10': 21, '12': 16,
@@ -158,17 +169,22 @@ with open('message_file', 'r') as message:
                 number = rotor3()[1]
                 return get_letter(number)
 
-            with open('output_message', 'a') as killer:
-                if qwert in "qazwsxedcrfvtgbyhnujmikolp":
-                    print(output_1(), file=killer)
-                else:
-                    if qwert in "!@#$%^&*()_+=-|}{\][';/.,?><:`~ \'\"12334567890":
-                        print(qwert, file=killer)
+           
+            if qwert in "qazwsxedcrfvtgbyhnujmikolp":
+                list_message.append(output_1())
+            else:
+                if qwert in "!@#$%^&*()_+=-|}{`\][';/.,?><:`~ \'\"12334567890":
+                    list_message.append(qwert)
 
         if R1 > 26:
             R1 = 1
         else:
             R1 += 1
 
-
+stringvar = ''
+with open('output_message', 'w') as killer: # i need make real words from this, but later
+    jv = []
+    print(list_message)
+    for value in list_message:
+        print(value, file=killer)
 
