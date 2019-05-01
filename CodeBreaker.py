@@ -1,8 +1,5 @@
 import random
 with open("day_codes", 'r') as codesheet:
-    # The three rotors and the days of the week
-    # this is the secret the rotor positions
-    # this would be 26 X 26 X 26 ways
     list1 = []
     r = codesheet.readlines()
     for i in r:
@@ -10,11 +7,9 @@ with open("day_codes", 'r') as codesheet:
         list1.append(i)
 
     Rands = str(random.choice(list1))
-    # print(Rands)
     Rands = Rands.strip('(')
     Rands = Rands.strip(')')
     word = Rands.split(", ")
-    # print(word)
     code = None
     list2 = list()
     for i in word:
@@ -45,8 +40,6 @@ with open('message_file', 'r') as message:
                  'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18,
                  's': 19, 't': 20, "u": 21, "v": 22, "w": 23, "x": 24,
                  'y': 25, 'z': 26}
-        # dict1 = dict([2, l] if 'a' in "abcdefghijklmnopqrstuvwxyz" else [2,22] for l in range(1, 33))
-        # figure out how to use to for loops at the same time to make full dict items
 
         return dict1[letter]
 
@@ -64,7 +57,6 @@ with open('message_file', 'r') as message:
 
 
             james = letter_position()
-            # print(james)
 
 
             def rotor_position_1():
@@ -77,7 +69,6 @@ with open('message_file', 'r') as message:
 
                 elif str(key) not in cross_wiring.keys():
 
-                    # print("its in the second round")
                     if key in cross_wiring.values():
 
                         list101 = list()
@@ -105,12 +96,10 @@ with open('message_file', 'r') as message:
                 cross_wiring = {'1': 19, '2': 7, '3': 23, '4': 16, '5': 25, '6': 9, '8': 15, '10': 11,
                                 '12': 22, '13': 26, '14': 17, '18': 20, '21': 24}
                 if str(key) in cross_wiring.keys():
-                    # print('first round pics')
                     return key, cross_wiring[str(key)]
 
                 elif str(key) not in cross_wiring.keys():
 
-                    # print("its in the second round")
                     if key in cross_wiring.values():
 
                         list101 = list()
@@ -132,19 +121,17 @@ with open('message_file', 'r') as message:
 
             rotor2 = rotor_position_2
 
-            def rotor_position_3(): # we need to incorporate R1 and R2 and R3 we need relative positions for eac one
+            def rotor_position_3(): 
                 key3 = None
                 key = rotor2()[1]
                 cross_wiring = {'1': 17, '2': 24, '3': 6, '4': 9, '5': 11, '7': 8, '10': 21, '12': 16,
                                 '13': 23, '14': 19, '15': 18, '20': 22, '25': 26}
 
                 if str(key) in cross_wiring.keys():
-                    # print('first round pics - 3rd')
                     return key, cross_wiring[str(key)]
 
                 elif str(key) not in cross_wiring.keys():
 
-                    # print("its in the second round")
                     if key in cross_wiring.values():
 
                         list101 = list()
@@ -171,10 +158,6 @@ with open('message_file', 'r') as message:
                 number = rotor3()[1]
                 return get_letter(number)
 
-            # print(rotor1())
-            # print(rotor2())
-            # print(rotor3())
-            # print(output_1())
             with open('output_message', 'a') as killer:
                 if qwert in "qazwsxedcrfvtgbyhnujmikolp":
                     print(output_1(), file=killer)
