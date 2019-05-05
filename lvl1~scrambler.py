@@ -1,19 +1,18 @@
 import random
+
 list_message = []
 print('------------------------------############-----------------------------')
 with open("day_codes", 'r') as codesheet:
-
     list1 = []
     r = codesheet.readlines()
     for i in r:
-        i = i.strip('\n')
+        i = i.strip("\n")
         list1.append(i)
 
     Rands = str(random.choice(list1))
     Rands = Rands.strip('(')
     Rands = Rands.strip(')')
     word = Rands.split(", ")
-    # print(word)
     code = None
     list2 = list()
     for i in word:
@@ -25,7 +24,11 @@ with open("day_codes", 'r') as codesheet:
     R1, R2, R3 = code
 
 
+print('------------------------------############-----------------------------')
+
+
 with open('message_file', 'r') as message:
+    R1 = 6  # i want to add a method in whixh i could ask the user for a number code
     read = message.read()
     read = read.lower()
 
@@ -52,10 +55,19 @@ with open('message_file', 'r') as message:
 
     print(get_letter(2))
 
-    
+    print('------------------------------############-----------------------------')
+    """so with this section i will take this in a functional perspective, within the functions i will take care of the 
+    cross wiring inside each rotor  """
+
+    """before this i need to add a general position to find the offset and from there we chose the number
+     to go into the rotor one """
     for qwert in read:
-        if qwert:
-            number101 = get_number('j')
+        if qwert not in 'qazwsxedcrfvtgbyhnujmikolp':
+
+            list_message.append(qwert)
+        if qwert in 'qazwsxedcrfvtgbyhnujmikolp':
+
+            number101 = get_number(qwert)
 
             def letter_position():
                 p1 = number101
@@ -67,10 +79,11 @@ with open('message_file', 'r') as message:
 
 
             james = letter_position()
-            
+
 
             def rotor_position_1():
                 key = letter_position()
+                print(key, "first rotor position")
                 cross_wiring = {'16': 13, '1': 26, '2': 17, '3': 19, '4': 5, '6': 21, '7': 24, '8': 22,
                                 '9': 14, '10': 23, '11': 25, '12': 18, '15': 20}
 
@@ -100,9 +113,9 @@ with open('message_file', 'r') as message:
 
             rotor1 = rotor_position_1
 
-
             def rotor_position_2():
                 key = rotor1()[1]
+                print(key, "second rotor key")
                 cross_wiring = {'1': 19, '2': 7, '3': 23, '4': 16, '5': 25, '6': 9, '8': 15, '10': 11,
                                 '12': 22, '13': 26, '14': 17, '18': 20, '21': 24}
                 if str(key) in cross_wiring.keys():
@@ -133,7 +146,6 @@ with open('message_file', 'r') as message:
 
 
             def rotor_position_3():
-                key3 = None
                 key = rotor2()[1]
                 cross_wiring = {'1': 17, '2': 24, '3': 6, '4': 9, '5': 11, '7': 8, '10': 21, '12': 16,
                                 '13': 23, '14': 19, '15': 18, '20': 22, '25': 26}
@@ -163,13 +175,13 @@ with open('message_file', 'r') as message:
 
 
             rotor3 = rotor_position_3
+            print(rotor3()[1])
 
 
             def output_1():
                 number = rotor3()[1]
                 return get_letter(number)
 
-           
             if qwert in "qazwsxedcrfvtgbyhnujmikolp":
                 list_message.append(output_1())
             else:
@@ -181,10 +193,22 @@ with open('message_file', 'r') as message:
         else:
             R1 += 1
 
+
 stringvar = ''
-with open('output_message', 'w') as killer: # i need make real words from this, but later
-    jv = []
-    print(list_message)
-    for value in list_message:
-        print(value, file=killer)
+with open('output_message', 'w') as killer:
+    def print_job():
+        for var in list_message:
+            yield var
+
+    stageVar = 0
+
+    for inti in print_job():
+        if inti != '\n':
+            stageVar += 1
+            killer.write(inti)
+            if stageVar == 80:
+                killer.write("\n")
+
+                stageVar = 0
+            next(print_job())
 
